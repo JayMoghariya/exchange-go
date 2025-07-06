@@ -3,9 +3,6 @@
 # Set environment variables for DB connection
 export DB_HOST=localhost
 export DB_PORT=5432
-export DB_USER=postgres
-export DB_PASSWORD=postgres
-export DB_NAME=trading
 
 # Ensure Go is installed
 if ! command -v go &> /dev/null; then
