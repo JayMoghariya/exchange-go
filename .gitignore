@@ -1,0 +1,38 @@
+# Binaries
+trading-system
+trading-system-go
+
+# Build and dependency directories
+/bin/
+/build/
+/dist/
+
+# Go modules cache
+/pkg/
+
+# Dependency files
+go.sum
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# Coverage/test output
+coverage.out
+
+# Docker artifacts
+*.pid
+
+# Ignore database files

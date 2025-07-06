@@ -1,19 +1,40 @@
 package main
 
 import (
-    "trading-system-go/db"
-    "trading-system-go/engine"
-    "trading-system-go/handlers"
-    "github.com/gin-gonic/gin"
+	"log"
+	"trading-system-go/db"
+	"trading-system-go/engine"
+	"trading-system-go/handlers"
+    "trading-system-go/middleware"
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
-func main() {
-    db.Init()
-    engine.StartPersistenceWorker()
+func init_db() {
+	// Initialize the database and run migrations
+	db.Init()
 
-    r := gin.Default()
-    r.POST("/orders", handlers.PlaceOrder)
-    r.POST("/register", handlers.RegisterUser)
-    r.GET("/ws", handlers.WebSocketHandler)
-    r.Run(":8080")
+	// Seed roles and permissions
+	db.SeedRolesAndPermissions()
+
+	// Seed admin user
+	db.SeedAdminUser()
+}
+
+func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Println(".env file not found or could not be loaded")
+	}
+
+	init_db()
+
+	engine.StartPersistenceWorker()
+
+	r := gin.Default()
+    r.POST("/orders", middleware.JWTAuthMiddleware(), handlers.PlaceOrder)
+	r.POST("/register", handlers.RegisterUser)
+	r.POST("/login", handlers.Login)
+	r.GET("/ws", handlers.WebSocketHandler)
+	r.Run(":8080")
 }
