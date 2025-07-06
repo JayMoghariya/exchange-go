@@ -1,3 +1,5 @@
+- This is a basic exchange trading system built with Go, Gin, and PostgreSQL. More features will be added.
+
 - generate token using 
 ```bash
 python3 -c "import secrets; print(secrets.token_hex(32))"
